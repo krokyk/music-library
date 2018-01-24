@@ -124,7 +124,6 @@ public class CheckForNewAlbumsJob extends AbstractJob {
                 incProgressBar();
             });
         } finally {
-//            toggle(mainFrame.getBtnBrowse(), mainFrame.getBtnScanDir(), mainFrame.getBtnCheck(), mainFrame.getTableAlbums(), mainFrame.getTableBands(), mainFrame.getTfDirPath());
             enableControls();
             resetProgressBar();
         }
