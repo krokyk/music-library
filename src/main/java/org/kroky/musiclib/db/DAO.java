@@ -6,6 +6,7 @@ package org.kroky.musiclib.db;
 
 import java.io.Serializable;
 import java.util.TreeSet;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -31,13 +32,13 @@ public class DAO {
      * @param args
      * @throws Exception
      */
-    //<editor-fold defaultstate="collapsed" desc="MAIN METHOD FOR TESTING PURPOSES">
+    // <editor-fold defaultstate="collapsed" desc="MAIN METHOD FOR TESTING PURPOSES">
     public static void main(String[] args) throws Exception {
         final Band band = new Band();
         band.setName("ACROSS THE RAIN");
         saveOrUpdate(band);
     }
-    //</editor-fold>
+    // </editor-fold>
 
     public static void rollback(Transaction tx) {
         if (tx == null) {
@@ -50,29 +51,13 @@ public class DAO {
         }
     }
 
-//    public static Band getBand(String name) {
-//        Band band = null;
-//        final Session session = dbm.getSession();
-//        Transaction tx = null;
-//        try {
-//            tx = session.beginTransaction();
-//            band = (Band) session.get(Band.class, name);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            LOG.error("Unable to commit.", e);
-//            rollback(tx);
-//        } finally {
-//            closeQuietly(session);
-//        }
-//        return band;
-//    }
     public static <T> T get(Class<T> c, Serializable id) {
         T entity = null;
         final Session session = dbm.getSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            entity = (T) session.get(c, id);
+            entity = session.get(c, id);
             tx.commit();
         } catch (HibernateException e) {
             LOG.error("Unable to commit.", e);

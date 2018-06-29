@@ -4,3 +4,7 @@
 /logs
 /musiclibdb
 /derby.log
+/target
+/bin
+/.gradle
+/user.properties

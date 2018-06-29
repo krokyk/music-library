@@ -8,6 +8,7 @@ package org.kroky.musiclib.db.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,7 +61,7 @@ public class Band extends AbstractEntity implements Serializable, Comparable<Ban
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.name);
+        hash = 29 * hash + Objects.hashCode(name);
         return hash;
     }
 
@@ -73,7 +74,7 @@ public class Band extends AbstractEntity implements Serializable, Comparable<Ban
             return false;
         }
         final Band other = (Band) obj;
-        if (!this.name.equalsIgnoreCase(other.name)) {
+        if (!name.equalsIgnoreCase(other.name)) {
             return false;
         }
         return true;
@@ -84,6 +85,7 @@ public class Band extends AbstractEntity implements Serializable, Comparable<Ban
         return name;
     }
 
+    @Override
     public String toDetailedString() {
         return "Name: " + name + " URL: " + url + " Albums: " + albums;
     }

@@ -7,6 +7,7 @@ package org.kroky.musiclib.db.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -81,9 +82,9 @@ public class Album extends AbstractEntity implements Serializable, Comparable<Al
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.name);
-        hash = 53 * hash + Objects.hashCode(this.releaseYear);
-        hash = 53 * hash + Objects.hashCode(this.band.getName());
+        hash = 53 * hash + Objects.hashCode(name);
+        hash = 53 * hash + Objects.hashCode(releaseYear);
+        hash = 53 * hash + Objects.hashCode(band.getName());
         return hash;
     }
 
@@ -96,13 +97,13 @@ public class Album extends AbstractEntity implements Serializable, Comparable<Al
             return false;
         }
         final Album other = (Album) obj;
-        if (!this.name.equalsIgnoreCase(other.name)) {
+        if (!name.equalsIgnoreCase(other.name)) {
             return false;
         }
-        if (!Objects.equals(this.releaseYear, other.releaseYear)) {
+        if (!Objects.equals(releaseYear, other.releaseYear)) {
             return false;
         }
-        if (!this.band.getName().equalsIgnoreCase(other.band.getName())) {
+        if (!band.getName().equalsIgnoreCase(other.band.getName())) {
             return false;
         }
         return true;
@@ -115,7 +116,8 @@ public class Album extends AbstractEntity implements Serializable, Comparable<Al
 
     @Override
     public String toDetailedString() {
-        return "id=" + id + ", name=" + name + ", year=" + releaseYear + ", checked=" + checked + ", band=" + band.getName();
+        return "id=" + id + ", name=" + name + ", year=" + releaseYear + ", checked=" + checked + ", band="
+                + band.getName();
     }
 
     @Override
@@ -133,7 +135,7 @@ public class Album extends AbstractEntity implements Serializable, Comparable<Al
      * @param a
      */
     public void update(Album a) {
-        this.checked = a.checked;
-        this.name = a.name;
+        checked = a.checked;
+        name = a.name;
     }
 }

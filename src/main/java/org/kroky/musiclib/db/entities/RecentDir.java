@@ -8,6 +8,7 @@ package org.kroky.musiclib.db.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -67,13 +68,13 @@ public class RecentDir extends AbstractEntity implements Serializable, Comparabl
         if (o == null || o.lastDate == null) {
             return 1;
         }
-        return -1 * lastDate.compareTo(o.lastDate); //to ensure Z-A ordering
+        return -1 * lastDate.compareTo(o.lastDate); // to ensure Z-A ordering
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + Objects.hashCode(this.dirPath);
+        hash = 11 * hash + Objects.hashCode(dirPath);
         return hash;
     }
 
@@ -86,7 +87,7 @@ public class RecentDir extends AbstractEntity implements Serializable, Comparabl
             return false;
         }
         final RecentDir other = (RecentDir) obj;
-        if (!Objects.equals(this.dirPath, other.dirPath)) {
+        if (!Objects.equals(dirPath, other.dirPath)) {
             return false;
         }
         return true;
