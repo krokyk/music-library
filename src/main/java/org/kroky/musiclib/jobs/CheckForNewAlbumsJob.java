@@ -9,13 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.kroky.musiclib.db.DAO;
 import org.kroky.musiclib.db.entities.Album;
 import org.kroky.musiclib.db.entities.Band;
@@ -23,6 +21,8 @@ import org.kroky.musiclib.gui.MainFrame;
 import org.kroky.musiclib.gui.models.AlbumsTableModel;
 import org.kroky.musiclib.gui.models.BandsTableModel;
 import org.kroky.musiclib.gui.table.BandsTable;
+import org.kroky.musiclib.htmlparsers.Parser;
+import org.kroky.musiclib.htmlparsers.ParserFactory;
 
 /**
  *
@@ -31,11 +31,6 @@ import org.kroky.musiclib.gui.table.BandsTable;
 public class CheckForNewAlbumsJob extends AbstractJob {
 
     private static final Logger LOG = LogManager.getLogger();
-    private static final Pattern NAME_PATTERN = Pattern.compile("itemprop=\"name\">(.*)</h4>");
-    private static final Pattern YEAR_PATTERN = Pattern.compile("itemprop=\"datePublished\">(.*)</div>");
-
-    private static final String SECTION_START = "<section id=\"discography\">";
-    private static final String SECTION_END = "Complete discography</a>";
 
     public CheckForNewAlbumsJob(MainFrame mainFrame) {
         super(mainFrame);
@@ -88,19 +83,10 @@ public class CheckForNewAlbumsJob extends AbstractJob {
                 bandsTableModel.fireTableRowsUpdated(0, bandsTableModel.getRowCount() - 1);
             }
 
-            Element discography = doc.getElementById("discography");
+            Parser parser = ParserFactory.getInstance().getParser(band.getUrl());
+            List<Album> albums = parser.parse(doc);
 
-            discography.select("h4[itemprop=name]").forEach(h4 -> {
-                String album = h4.html();
-                for (Element el : h4.siblingElements()) {
-                    if (el.tagName().equals("div") && "datePublished".equals(el.attr("itemprop"))) {
-                        int year = Integer.parseInt(el.html());
-                        updateBand(band, album, year);
-                        break;
-                    }
-                }
-
-            });
+            albums.forEach(a -> updateBand(band, a.getName(), a.getReleaseYear()));
         } else {
             final String msg = ("No URL defined for " + band.getName()).intern();
             LOG.info(msg);

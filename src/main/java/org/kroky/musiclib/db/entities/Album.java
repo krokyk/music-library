@@ -27,7 +27,7 @@ public class Album extends AbstractEntity implements Serializable, Comparable<Al
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String name;

@@ -6,6 +6,8 @@
 package org.kroky.musiclib;
 
 import java.beans.Beans;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +18,14 @@ import org.kroky.musiclib.gui.MainFrame;
  * @author user
  */
 public class MusicLibrary {
+
+    static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+
+    static {
+        if (System.getProperty("logFileName") == null || System.getProperty("logFileName").isEmpty()) {
+            System.setProperty("logFileName", String.format("musiclib-%s.log", DATE_TIME_FORMAT.format(new Date())));
+        }
+    }
 
     private static final Logger LOG = LogManager.getLogger();
 
